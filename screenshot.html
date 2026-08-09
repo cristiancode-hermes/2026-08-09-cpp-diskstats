@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #1e1e2e;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh; padding: 40px;
+  }
+  .terminal {
+    background: #181825;
+    border-radius: 12px;
+    padding: 24px 28px;
+    font-family: 'Fira Code', monospace;
+    font-size: 13px;
+    line-height: 1.55;
+    color: #cdd6f4;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    max-width: 900px;
+    width: 100%;
+    border: 1px solid #313244;
+  }
+  .terminal .title-bar {
+    display: flex; align-items: center; gap: 8px;
+    padding-bottom: 16px; border-bottom: 1px solid #313244;
+    margin-bottom: 16px;
+  }
+  .terminal .title-bar .dot {
+    width: 12px; height: 12px; border-radius: 50%;
+  }
+  .terminal .title-bar .dot.r { background: #f38ba8; }
+  .terminal .title-bar .dot.y { background: #f9e2af; }
+  .terminal .title-bar .dot.g { background: #a6e3a1; }
+  .terminal .title-bar .title {
+    margin-left: 12px; font-size: 13px; color: #6c7086;
+  }
+  .terminal .line { white-space: pre; }
+  .terminal .highlight { color: #89b4fa; }
+  .terminal .green { color: #a6e3a1; }
+  .terminal .yellow { color: #f9e2af; }
+  .terminal .red { color: #f38ba8; }
+  .terminal .dim { color: #6c7086; }
+  .terminal .cyan { color: #89dceb; }
+  .terminal .bold { color: #cdd6f4; }
+  .terminal .sep { color: #45475a; }
+  .terminal .prompt { color: #a6adc8; }
+  .terminal .header { color: #f5e0dc; }
+</style>
+</head>
+<body>
+<div class="terminal">
+  <div class="title-bar">
+    <div class="dot r"></div>
+    <div class="dot y"></div>
+    <div class="dot g"></div>
+    <span class="title">diskstats — Disk I/O Monitor (C++23)</span>
+  </div>
+
+  <div class="line bold">  Disk I/O Monitor — /proc/diskstats  (rates: avg since boot, uptime 2360815s)</div>
+  <div class="line sep">  -------------------------------------------------------------------------------</div>
+  <div class="line"></div>
+  <div class="line highlight">  DEVICE   TYPE  SIZE   READS   WRITES     r/s     w/s   rKB/s   wKB/s  %busy  avgIO</div>
+  <div class="line"><span class="bold">  sda      </span><span class="green">SSD </span>  215G   49.3M   31.5M    20.9    13.4     332     282  <span class="green">  1.1%</span>    1.28</div>
+  <div class="line"><span class="bold">  sda1     </span><span class="dim">-    </span>    -   49.3M   31.5M    20.9    13.4     332     282  <span class="green">  1.2%</span>    1.26</div>
+  <div class="line"><span class="bold">  sda14    </span><span class="dim">-    </span>    -      235       0     0.0     0.0       0       0  <span class="green">  0.0%</span>    0.24</div>
+  <div class="line"><span class="bold">  sda15    </span><span class="dim">-    </span>    -      270       3     0.0     0.0       0       0  <span class="green">  0.0%</span>    0.32</div>
+  <div class="line"><span class="bold">  sda16    </span><span class="dim">-    </span>    -      484     731     0.0     0.0       0       0  <span class="green">  0.0%</span>    6.74</div>
+  <div class="line dim">  devices: 5</div>
+  <div class="line"></div>
+
+  <div class="line prompt">  $ ./diskstats --sort busy --top 3</div>
+  <div class="line highlight">  DEVICE   TYPE  SIZE   READS   WRITES     r/s     w/s   rKB/s   wKB/s  %busy  avgIO</div>
+  <div class="line"><span class="bold">  sda1     </span><span class="dim">-    </span>    -   49.3M   31.5M    20.9    13.4     332     282  <span class="yellow">  1.2%</span>    1.26</div>
+  <div class="line"><span class="bold">  sda      </span><span class="green">SSD </span>  215G   49.3M   31.5M    20.9    13.4     332     282  <span class="green">  1.1%</span>    1.28</div>
+  <div class="line"><span class="bold">  sda16    </span><span class="dim">-    </span>    -      484     731     0.0     0.0       0       0  <span class="green">  0.0%</span>    6.74</div>
+  <div class="line"></div>
+
+  <div class="line prompt">  $ ./diskstats --watch 2 --json</div>
+  <div class="line sep">  {</div>
+  <div class="line"><span class="cyan">  "disks"</span>: [</div>
+  <div class="line">    {<span class="cyan">"device"</span>:<span class="yellow">"sda"</span>,<span class="cyan">"type"</span>:<span class="yellow">"SSD"</span>,<span class="cyan">"size_gb"</span>:214.7,<span class="cyan">"reads"</span>:49273257,<span class="cyan">"writes"</span>:31549517,</div>
+  <div class="line">     <span class="cyan">"rps"</span>:20.9,<span class="cyan">"wps"</span>:13.4,<span class="cyan">"r_kb_s"</span>:332.0,<span class="cyan">"w_kb_s"</span>:282.1,<span class="cyan">"busy_pct"</span>:1.10,<span class="cyan">"avg_io_ms"</span>:1.28},</div>
+  <div class="line">    {<span class="cyan">"device"</span>:<span class="yellow">"sda1"</span>,<span class="cyan">"type"</span>:<span class="yellow">"-"</span>,<span class="cyan">"size_gb"</span>:0.0,<span class="cyan">"reads"</span>:49270268,<span class="cyan">"writes"</span>:31548783,</div>
+  <div class="line">     <span class="cyan">"rps"</span>:20.9,<span class="cyan">"wps"</span>:13.4,<span class="cyan">"r_kb_s"</span>:331.9,<span class="cyan">"w_kb_s"</span>:282.0,<span class="cyan">"busy_pct"</span>:1.22,<span class="cyan">"avg_io_ms"</span>:1.26}</div>
+  <div class="line">  ],</div>
+  <div class="line"><span class="cyan">  "summary"</span>: {<span class="cyan">"disks"</span>:5,<span class="cyan">"total_read_gb"</span>:1605.0,<span class="cyan">"total_write_gb"</span>:1364.1}</div>
+  <div class="line sep">  }</div>
+  <div class="line"></div>
+  <div class="line prompt">  $ ./diskstats --selftest  │</div>
+  <div class="line green">  18 passed, 0 failed</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,4 @@
+diskstats
+build/
+*.o
+output.txt
